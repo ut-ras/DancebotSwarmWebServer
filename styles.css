@@ -1,0 +1,130 @@
+h1, p, button  {
+    font-family: 'Montserrat', sans-serif;
+}
+
+#container {
+    position: absolute;
+    top: 7%;
+    left: 6%;
+    width: 88%;
+    height: 3000px;
+}
+
+#titleBar {
+    position: absolute;
+    top: 0%; 
+    right: 0%; 
+    width: 100%; 
+    height: 5%; 
+    background-color:orange; 
+    margin-top: 0%;
+    text-align: center;
+}
+
+#titleBar > h1 {
+    position: relative;
+    font-size:1em; 
+    /* margin: auto; */
+}
+
+.dancebot {
+    position: absolute;
+    width:40%;
+    height: 14%;
+    top: 4%;
+}
+
+.robotHead {
+    width:100%; 
+    height:80%; 
+    display: block; 
+    margin:auto;
+}
+.robotHead > img {
+    width: 100%;
+    height: 90%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.flavorText {
+    text-align: center;
+}
+.flavorText > button {
+    font-size: 1em;
+    padding-top: calc(10% - 1em/2);
+    padding-bottom: calc(10% - 1em/2);
+    background-color: orange;
+    border: none;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.flavorText > button:hover {
+    background-color: rgb(0, 165, 0);
+}
+
+#dancebot2 {
+    left: 60%;
+}
+
+#dancebot3 {
+    top: 23%;
+}
+
+#dancebot4 {
+    top: 23%;
+    left: 60%;
+}
+
+#mothership {
+    position: absolute;
+    top: 47%;
+    height: 21%;
+    width: 100%;
+}
+
+.swarmCommands {
+    position: absolute;
+    top: 81%;
+    height: 10%;
+    width: 100%;
+}
+
+.swarmCommands > button {
+    background-color: orange;
+    border: none;
+}
+
+#stopAll {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 49%;
+}
+
+#resetAll {
+    position: absolute;
+    top: 0;
+    left: 60%;
+    width: 40%;
+    height: 49%; 
+}
+
+#walkAll {
+    position: absolute;
+    top: 51%;
+    left: 0;
+    width: 40%;
+    height: 49%;
+}
+
+#hopAll {
+    position: absolute;
+    top: 51%;
+    left: 60%;
+    width: 40%;
+    height: 49%;
+}
