@@ -1,8 +1,8 @@
 <!doctype html>
 
 <html lang="en">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">   
-  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+
   <script>
     function togglePic1() {
       var x = document.getElementById("bot1");
@@ -28,66 +28,68 @@
   <title>DanceBot Control Center</title>
 </head>
 
-<body bgcolor="darkgrey">
+<body bgcolor="#EAEAEA">
 	<!-- <img id = "bot1" alt = "1" onclick="togglePic1()" src = "Images/Robo1/Stop.png" width = "256" height="256"> -->
 
   <div id="titleBar">
     <h1>
-      Demobots Dancebot Swarm
+      Dancebot Control Center
     </h1>
-  </div>  
+  </div>
 	<div id="container">
     <!-- Dancebots -->
-		<p style="position:absolute; top:0%; left:0%; margin:0;">Dancebots:</p>
+		<p style="position:absolute; top:0%; left:0%; margin:0;font-weight: bold;">Dancebots:</p>
 		<div id="dancebot1" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/Robo1/Hop.png" alt="Default Head HERE">
+				<img src="Images/happy.png" alt="Default Head HERE">
       </div>
       <div class="flavorText">
         <button type="button" class="stateText">
-          1. |    SOMETEXT    | 
+          1. |    SOMETEXT    |
         </button>
       </div>
     </div>
     <div id="dancebot2" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/Robo1/Stop.png" alt="Default Head HERE">
+				<img src="Images/happy.png" alt="Default Head HERE">
       </div>
       <div class="flavorText">
         <button type="button" class="stateText">
-          2. |    SOMETEXT    | 
+          2. |    SOMETEXT    |
         </button>
       </div>
     </div>
     <div id="dancebot3" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/Robo1/Walk.png" alt="Default Head HERE">
+				<img src="Images/happy.png" alt="Default Head HERE">
       </div>
       <div class="flavorText">
         <button type="button" class="stateText">
-          3. |    SOMETEXT    | 
+          3. |    SOMETEXT    |
         </button>
       </div>
     </div>
     <div id="dancebot4" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/Robo1/Hop.png" alt="Default Head HERE">
+				<img src="Images/happy.png" alt="Default Head HERE">
       </div>
       <div class="flavorText">
         <button type="button" class="stateText">
-          4. |    SOMETEXT    | 
+          4. |    SOMETEXT    |
         </button>
       </div>
     </div>
 
     <!-- Mothership -->
-    <p style="position:absolute; top:43%; left:0%; margin:0;">Mothership:</p>
-    <div id="mothership">
-      <img src="Images/Robo1/Hop.png" alt="Default Head HERE">
+    <p style="position:absolute; top:40%; left:0%; margin:0;font-weight: bold;">Mothership:</p>
+    <div id="mothership" class="dancebot">
+        <div class="robotHead">
+      <img src="Images/happy.png" alt="Default Head HERE">
+        </div>
     </div>
 
     <!-- Swarm Commands -->
-    <p style="position:absolute; top:77%; left:0%; margin:0;">Swarm Commands::</p>
+    <p style="position:absolute; top:77%; left:0%; margin:0;font-weight: bold;">Swarm Commands:</p>
     <div class="swarmCommands">
       <button id="stopAll">
         Stop
