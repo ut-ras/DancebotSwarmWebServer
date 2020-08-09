@@ -29,5 +29,7 @@ Github hosted front end for the Dancebot Swarm Robots
     * Restart nginx: `sudo service nginx restart`
     * Check `localhost:PORT_YOU_SPECIFIED_IN_THE_FILE`
   * [Windows](https://www.javatpoint.com/how-to-install-nginx-on-windows)
-    * nginx should be at C:/nginx 
+    * nginx should be at C:/nginx
     * There should be a config file, inside should display where the root is; https://stackoverflow.com/questions/19985228/nginx-change-document-root-directory (might be easier to modify the file from https://ubuntu.com/tutorials/install-and-configure-nginx#4-setting-up-virtual-host)
+* Node JS
+* Express

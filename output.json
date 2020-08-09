@@ -1,0 +1,13 @@
+{
+    "robot_type": "dancebot",
+    "num_connected": 1,
+    "robots": [
+        {
+            "72": {
+                "robot_state": "rose",
+                "robot_eye_color": "photo",
+                "robot_expression": "light"
+            }
+        }
+    ]
+}
