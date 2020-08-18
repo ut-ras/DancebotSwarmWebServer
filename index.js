@@ -19,20 +19,27 @@ fs.writeFile('output.json', obj, (err) => {
 
 // open up the endpoint /robotJoin to a GET request
 app.get('/robotJoin', (req, res) => {
-    console.log("req query: ", req.query);
+    console.log("\n\nreq query: ", req.query);
     var exists = false;
     let output = getDataFromFile();
+
+    console.log("output: ", output);
+
     if(req.query['id'] != null){
-        var botlist = output.robots; //how to get key from robots?
-        var i = 0;
-        for(/*i = 0; i < output.num_connected; i++*/var i in botlist){
-            let robot = botlist[i];
-            console.log(i);
-            if(i === (req.query['id'])){
-                console.log('successful find!');
-                exists = true;
-            }
-        }
+        console.log("robots: ", output.robots);
+        output.robots.forEach(robot => {
+            console.log("Robot: ", robot);
+        });
+        // var botlist = output.robots; //how to get key from robots?
+        // var i = 0;
+        // for(/*i = 0; i < output.num_connected; i++*/var i in botlist){
+        //     let robot = botlist[i];
+        //     console.log(i);
+        //     if(i === (req.query['id'])){
+        //         console.log('successful find!');
+        //         exists = true;
+        //     }
+        // }
     }
     // if robot is not specified, set him up with default settings and add id
     if(req.query['id'] == null){
