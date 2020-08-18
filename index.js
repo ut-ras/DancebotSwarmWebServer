@@ -25,19 +25,17 @@ app.get('/robotJoin', (req, res) => {
     if(req.query['id'] != null){
         var botlist = output.robots; //how to get key from robots?
         var i = 0;
-        for(i = 0; i < output.num_connected; i++){
+        for(/*i = 0; i < output.num_connected; i++*/var i in botlist){
             let robot = botlist[i];
-            console.log(robot);
-            console.log(botlist);
+            console.log(i);
             if(i === (req.query['id'])){
                 console.log('successful find!');
                 exists = true;
             }
         }
     }
-    // if this is the first robot who connects, let's set him up as something random.
+    // if robot is not specified, set him up with default settings and add id
     if(req.query['id'] == null){
-        console.log('Dame da ne, dame yo, dame dano yo');
         output.num_connected ++;
         var auto = 'auto_add';
         var ROBOT_ID = auto.concat(output.num_connected.toString());
