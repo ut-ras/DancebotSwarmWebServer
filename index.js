@@ -54,6 +54,7 @@ app.get('/robotJoin', (req, res) => {
             }
         }
     }
+
     // if robot is not specified, set him up with default settings and add id
     if(req.query['id'] == null){
         output.num_connected ++;
@@ -73,6 +74,32 @@ app.get('/robotJoin', (req, res) => {
     console.log(output);
 
     res.status(200).send('Number of Bots Added: ' + output.num_connected);
+});
+
+app.get('/robotLeave', (req, res) => {
+    console.log("\n\nreq query: ", req.query);
+    var exists = false;
+    let output = getDataFromFile();
+
+    console.log("output: ", output);
+
+    if(req.query['id'] != null){
+        var botlist = output.robots;
+        for(i = 0; i < output.num_connected; i++){
+            console.log(botlist[i]);
+            let robot = botlist[i];
+            console.log(robot['id']);
+            if(robot['id'] === (req.query['id'])){
+                console.log('successful find!');
+                exists = true;
+                output.robots.remove(i);
+                saveDataToFile(output);
+            }
+        }
+    }
+
+    res.status(200).send('Successfully removed bot: ' + req.query['id'])
+    console.log(output);
 });
 
 
