@@ -35,9 +35,9 @@ app.get('/robotJoin', (req, res) => {
     if(req.query['move']!=null){
         robomove = req.query['move'];
     }
-    if(req.query['eyecol']!=null){
-        roboecol = req.query['eyecol'];
-    }
+    // if(req.query['eyecol']!=null){
+    //     roboecol = req.query['eyecol'];
+    // }
     if(req.query['expression']!=null){
         roboexp = req.query['expression'];
     }
@@ -60,14 +60,16 @@ app.get('/robotJoin', (req, res) => {
         output.num_connected ++;
         var auto = 'auto_add_';
         var ROBOT_ID = auto.concat(output.num_connected.toString());
-        var duck = `{"id":"${ROBOT_ID}","charge":"${robocharge}","move":"${robomove}","eyecol":"${roboecol}","expression":"${roboexp}"}`;
+        var duck = `{"id":"${ROBOT_ID}","charge":"${robocharge}","move":"${robomove}","expression":"${roboexp}"}`;
+        // var duck = `{"id":"${ROBOT_ID}","charge":"${robocharge}","move":"${robomove}","eyecol":"${roboecol}","expression":"${roboexp}"}`;
         output.robots.push(JSON.parse(duck));
         saveDataToFile(output);
     }
     else if(!exists){
         output.num_connected ++;
         var ROBOT_ID = req.query['id'];
-        var duck = `{"id":"${ROBOT_ID}","charge":"${robocharge}","move":"${robomove}","eyecol":"${roboecol}","expression":"${roboexp}"}`;
+        var duck = `{"id":"${ROBOT_ID}","charge":"${robocharge}","move":"${robomove}","expression":"${roboexp}"}`;
+        // var duck = `{"id":"${ROBOT_ID}","charge":"${robocharge}","move":"${robomove}","eyecol":"${roboecol}","expression":"${roboexp}"}`;
         output.robots.push(JSON.parse(duck));
         saveDataToFile(output);
     }
@@ -99,6 +101,56 @@ app.get('/robotLeave', (req, res) => {
     }
 
     res.status(200).send('Successfully removed bot: ' + req.query['id'])
+    console.log(output);
+});
+
+app.get('/userMove', (req, res) => {
+    console.log("\n\nreq query: ", req.query);
+    var exists = false;
+    let output = getDataFromFile();
+
+    console.log("output: ", output);
+
+    if(req.query['id'] != null && req.query['move'] != null){
+        var botlist = output.robots;
+        for(i = 0; i < output.num_connected; i++){
+            console.log(botlist[i]);
+            let robot = botlist[i];
+            console.log(robot['id']);
+            if(robot['id'] === (req.query['id'])){
+                console.log('successful find!');
+                robot['move'] = req.query['move'];
+                saveDataToFile(output);
+            }
+        }
+    }
+
+    res.status(200).send('Successfully changed movement of bot: ' + req.query['id'])
+    console.log(output);
+});
+
+app.get('/userExpress', (req, res) => {
+    console.log("\n\nreq query: ", req.query);
+    var exists = false;
+    let output = getDataFromFile();
+
+    console.log("output: ", output);
+
+    if(req.query['id'] != null && req.query['expression'] != null){
+        var botlist = output.robots;
+        for(i = 0; i < output.num_connected; i++){
+            console.log(botlist[i]);
+            let robot = botlist[i];
+            console.log(robot['id']);
+            if(robot['id'] === (req.query['id'])){
+                console.log('successful find!');
+                robot['expression'] = req.query['expression'];
+                saveDataToFile(output);
+            }
+        }
+    }
+
+    res.status(200).send('Successfully changed expression of bot: ' + req.query['id'])
     console.log(output);
 });
 
