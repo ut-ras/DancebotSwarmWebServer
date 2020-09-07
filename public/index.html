@@ -5,23 +5,28 @@
 
   <script>
     function togglePic1() {
-      var x = document.getElementById("bot1");
-      console.log(x.alt);
-      if(x.alt == "1"){
-        x.src = "Images/Robo1/Walk.png";
-        x.alt = "2";
+      // var x = document.getElementById("bot1");
+      // console.log(x.alt);
+      // if(x.alt == "1"){
+      //   x.src = "Images/Robo1/Walk.png";
+      //   x.alt = "2";
+      // }
+      // else if(x.alt == "2"){
+      //   x.src = "Images/Robo1/Hop.png";
+      //   x.alt = "3";
+      // }
+      // else{
+      //   x.src = "Images/Robo1/Stop.png";
+      //   x.alt = "1"
+      // }
+      // console.log(x.alt);
+
+      let image1 = document.getElementsByClassName("robotHead")[0].getElementsByTagName("img")[0];
+      if(image1.src == "http://localhost:3000/Images/happy.png"){
+        image1.setAttribute("src", "Images/sad.png");
       }
-      else if(x.alt == "2"){
-        x.src = "Images/Robo1/Hop.png";
-        x.alt = "3";
-      }
-      else{
-        x.src = "Images/Robo1/Stop.png";
-        x.alt = "1"
-      }
-      console.log(x.alt);
     }
-  </script>
+  </script>  
   <link rel="stylesheet" href="styles.css">
 <head>
   <meta charset="utf-8">
@@ -41,7 +46,7 @@
 		<p style="position:relative; top:0%; left:0%; margin:0;font-weight: bold;font-size:1.5vh">Dancebots:</p>
 		<div id="dancebot1" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/happy.png" alt="Default Head HERE">
+				<img src="Images/happy.png" onclick="togglePic1()" alt="Default Head HERE">
       </div>
       <div class="flavorText">
         <button type="button" class="stateText">
