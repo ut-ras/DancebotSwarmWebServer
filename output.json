@@ -1,9 +1,0 @@
-<<<<<<< HEAD
-{
-    "robot_type" : "dancebot",
-    "num_connected" : 0,
-    "robots" : []
-}
-=======
-{"robot_type":"dancebot","num_connected":5,"robots":[{"id":"Blinky","robot_state":"rose","robot_eye_color":"photo","robot_expression":"light"},{"id":"auto_add2","robot_state":"rose","robot_eye_color":"photo","robot_expression":"light"},{"id":"auto_add3","robot_state":"rose","robot_eye_color":"photo","robot_expression":"light"},{"id":"Oingy","robot_state":"rose","robot_eye_color":"photo","robot_expression":"light"},{"id":"Boingy","robot_state":"rose","robot_eye_color":"photo","robot_expression":"light"}]}
->>>>>>> fe5e43c687fe4a85a35e748d843209b4e6e28881
