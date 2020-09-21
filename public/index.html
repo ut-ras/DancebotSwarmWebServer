@@ -4,7 +4,31 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
 
   <script>
+    // const express = require('express');
+    // const app = express();
+    var xhr = new XMLHttpRequest();
+      xhr.open("GET", "robotJoin", true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify({
+        value: "17"
+      }));
     function togglePic1() {
+      xhr.open("GET", "userExpress?id=auto_add_1&expression=sad", true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify({
+        value: "17"
+      }));
+
+    //   fetch("/robotJoin", {
+    //     method: "POST",
+    //     body: JSON.stringify({
+    //     name: "Deska",
+    //     email: "deska@gmail.com",
+    //     phone: "342234553"
+    //     })
+    // }).then(result => {
+    //     console.log("DONE");
+    //   })
       // var x = document.getElementById("bot1");
       // console.log(x.alt);
       // if(x.alt == "1"){
@@ -33,7 +57,7 @@
   <title>DanceBot Control Center</title>
 </head>
 
-<body bgcolor="#EAEAEA">
+<body style="background-color:#EAEAEA">
 	<!-- <img id = "bot1" alt = "1" onclick="togglePic1()" src = "Images/Robo1/Stop.png" width = "256" height="256"> -->
 
   <div id="titleBar">
