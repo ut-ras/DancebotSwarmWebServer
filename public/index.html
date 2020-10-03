@@ -8,11 +8,24 @@
     // const app = express();
     var xhr = new XMLHttpRequest();
     function togglePower(index){
-      xhr.open("GET", `robotJoin?id=robot${index+1}`, true);
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.send(JSON.stringify({
-        value: "17"
-      }));
+      let powerButton = document.getElementsByClassName("power")[index];
+      if(powerButton.textContent == "ON"){
+        console.log("PRESSED");
+        powerButton.textContent = "OFF";
+        xhr.open("GET", `robotJoin?id=robot${index+1}`, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+          value: "17"
+        }));
+      }else{
+        powerButton.textContent = "ON";
+        xhr.open("GET", `robotLeave?id=robot${index+1}`, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+          value: "17"
+        }));
+      }
+      
     }
     function togglePic(index) {
       let image = document.getElementsByClassName("robotHead")[index].getElementsByTagName("img")[0];
@@ -85,9 +98,7 @@
         <button class="stateText">
           1. |    SOMETEXT    |
         </button>
-        <button type="button" onclick="togglePower(0)">
-          ON/OFF
-        </button>
+        <button type="button" class="power" onclick="togglePower(0)">ON</button>
       </div>
     </div>
     <div id="dancebot2" class="dancebot">
@@ -98,9 +109,7 @@
         <button type="button" class="stateText">
           2. |    SOMETEXT    |
         </button>
-        <button type="button" onclick="togglePower(1)">
-          ON/OFF
-        </button>
+        <button type="button" class="power" onclick="togglePower(1)">ON</button>
       </div>
     </div>
     <div id="dancebot3" class="dancebot">
@@ -111,9 +120,7 @@
         <button type="button" class="stateText">
           3. |    SOMETEXT    |
         </button>
-        <button type="button" onclick="togglePower(2)">
-          ON/OFF
-        </button>
+        <button type="button" class="power" onclick="togglePower(2)">ON</button>
       </div>
     </div>
     <div id="dancebot4" class="dancebot">
@@ -124,9 +131,7 @@
         <button type="button" class="stateText">
           4. |    SOMETEXT    |
         </button>
-        <button type="button" onclick="togglePower(3)">
-          ON/OFF
-        </button>
+        <button type="button" class="power" onclick="togglePower(3)">ON</button>
       </div>
     </div>
 

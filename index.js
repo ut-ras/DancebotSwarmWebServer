@@ -94,7 +94,8 @@ app.get('/robotLeave', (req, res) => {
             if(robot['id'] === (req.query['id'])){
                 console.log('successful find!');
                 exists = true;
-                output.robots.remove(i);
+                output.robots.splice(i, 1);
+                output.num_connected--;
                 saveDataToFile(output);
             }
         }
