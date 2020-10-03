@@ -12,19 +12,19 @@
       xhr.send(JSON.stringify({
         value: "17"
       }));
-    function togglePic1() {
-      let image1 = document.getElementsByClassName("robotHead")[0].getElementsByTagName("img")[0];
-      if(image1.src == "http://localhost:3000/Images/happy.png"){
-        image1.setAttribute("src", "http://localhost:3000/Images/dead.png");
-        xhr.open("GET", "userExpress?id=auto_add_1&expression=dead", true);
+    function togglePic(index) {
+      let image = document.getElementsByClassName("robotHead")[index].getElementsByTagName("img")[0];
+      if(image.src == "http://localhost:3000/Images/happy.png"){
+        image.setAttribute("src", "http://localhost:3000/Images/dead.png");
+        xhr.open("GET", `userExpress?id=auto_add_${index+1}&expression=dead`, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({
           value: "17"
         }));
       }
-      else if(image1.src == "http://localhost:3000/Images/dead.png"){
-        image1.setAttribute("src", "http://localhost:3000/Images/happy.png");
-        xhr.open("GET", "userExpress?id=auto_add_1&expression=happy", true);
+      else if(image.src == "http://localhost:3000/Images/dead.png"){
+        image.setAttribute("src", "http://localhost:3000/Images/happy.png");
+        xhr.open("GET", `userExpress?id=auto_add_${index+1}&expression=happy`, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({
           value: "17"
@@ -77,7 +77,7 @@
 		<p style="position:relative; top:0%; left:0%; margin:0;font-weight: bold;font-size:1.5vh">Dancebots:</p>
 		<div id="dancebot1" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/happy.png" onclick="togglePic1()" alt="Default Head HERE">
+				<img src="Images/happy.png" onclick="togglePic(0)" alt="Default Head HERE">
       </div>
       <div class="flavorText">
         <button type="button" class="stateText">
@@ -87,7 +87,7 @@
     </div>
     <div id="dancebot2" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/happy.png" alt="Default Head HERE">
+				<img src="Images/happy.png" onclick="togglePic(1)" alt="Default Head HERE">
       </div>
       <div class="flavorText">
         <button type="button" class="stateText">
@@ -97,7 +97,7 @@
     </div>
     <div id="dancebot3" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/happy.png" alt="Default Head HERE">
+				<img src="Images/happy.png" onclick="togglePic(2)" alt="Default Head HERE">
       </div>
       <div class="flavorText">
         <button type="button" class="stateText">
@@ -107,7 +107,7 @@
     </div>
     <div id="dancebot4" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/happy.png" alt="Default Head HERE">
+				<img src="Images/happy.png" onclick="togglePic(3)" alt="Default Head HERE">
       </div>
       <div class="flavorText">
         <button type="button" class="stateText">

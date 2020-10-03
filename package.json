@@ -18,5 +18,7 @@
   "homepage": "https://github.com/ut-ras/DancebotSwarmUI#readme",
   "dependencies": {
     "express": "^4.17.1"
-  }
+  },
+  "nodemonConfig": { "ext": "js", "ignore": ["*.test.ts", "db/*"], "delay": "2" },
+    "scripts": { "start": "nodemon" }
 }
