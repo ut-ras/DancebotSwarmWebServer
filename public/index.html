@@ -13,11 +13,23 @@
         value: "17"
       }));
     function togglePic1() {
-      xhr.open("GET", "userExpress?id=auto_add_1&expression=sad", true);
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.send(JSON.stringify({
-        value: "17"
-      }));
+      let image1 = document.getElementsByClassName("robotHead")[0].getElementsByTagName("img")[0];
+      if(image1.src == "http://localhost:3000/Images/happy.png"){
+        image1.setAttribute("src", "http://localhost:3000/Images/dead.png");
+        xhr.open("GET", "userExpress?id=auto_add_1&expression=dead", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+          value: "17"
+        }));
+      }
+      else if(image1.src == "http://localhost:3000/Images/dead.png"){
+        image1.setAttribute("src", "http://localhost:3000/Images/happy.png");
+        xhr.open("GET", "userExpress?id=auto_add_1&expression=happy", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+          value: "17"
+        }));
+      }
 
     //   fetch("/robotJoin", {
     //     method: "POST",
@@ -44,11 +56,6 @@
       //   x.alt = "1"
       // }
       // console.log(x.alt);
-
-      let image1 = document.getElementsByClassName("robotHead")[0].getElementsByTagName("img")[0];
-      if(image1.src == "http://localhost:3000/Images/happy.png"){
-        image1.setAttribute("src", "http://localhost:3000/Images/sad.png");
-      }
     }
   </script>  
   <link rel="stylesheet" href="styles.css">
