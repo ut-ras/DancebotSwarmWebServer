@@ -6,9 +6,9 @@
   <script>
     // const express = require('express');
     // const app = express();
+    var xhr = new XMLHttpRequest();
     function togglePower(index){
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", `robotJoin/id=robot${index+1}`, true);
+      xhr.open("GET", `robotJoin?id=robot${index+1}`, true);
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send(JSON.stringify({
         value: "17"
