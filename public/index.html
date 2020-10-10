@@ -7,6 +7,8 @@
     // const express = require('express');
     // const app = express();
     var xhr = new XMLHttpRequest();
+    $.getJSON("../output.json");
+
     function togglePower(index){
       let powerButton = document.getElementsByClassName("power")[index];
       if(powerButton.textContent == "ON"){
@@ -17,6 +19,9 @@
         xhr.send(JSON.stringify({
           value: "17"
         }));
+        if(image.src != "http://localhost:3000/Images/happy.png"){
+          image.setAttribute("src", "http://localhost:3000/Images/happy.png");
+        }
       }else{
         powerButton.textContent = "ON";
         xhr.open("GET", `robotLeave?id=robot${index+1}`, true);
@@ -24,8 +29,10 @@
         xhr.send(JSON.stringify({
           value: "17"
         }));
+        if(image.src != "http://localhost:3000/Images/idle2.png"){
+          image.setAttribute("src", "http://localhost:3000/Images/idle2.png");
+        }
       }
-      
     }
     function togglePic(index) {
       let image = document.getElementsByClassName("robotHead")[index].getElementsByTagName("img")[0];
