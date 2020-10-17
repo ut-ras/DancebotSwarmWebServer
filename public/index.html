@@ -6,6 +6,9 @@
   <script>
     // const express = require('express');
     // const app = express();
+
+    const images = ["happy", "error", "full charge", "sad"] // When off, it's idle. When battery = 0, dead.
+
     var xhr = new XMLHttpRequest();
     function togglePower(index){
       let powerButton = document.getElementsByClassName("power")[index];
@@ -17,6 +20,7 @@
         xhr.send(JSON.stringify({
           value: "17"
         }));
+        powerButton.previousElementSibling.style.opacity = 1;
       }else{
         powerButton.textContent = "ON";
         xhr.open("GET", `robotLeave?id=robot${index+1}`, true);
@@ -24,27 +28,20 @@
         xhr.send(JSON.stringify({
           value: "17"
         }));
-      }
-      
+        powerButton.previousElementSibling.style.opacity = 0.5;
+      } 
     }
     function togglePic(index) {
       let image = document.getElementsByClassName("robotHead")[index].getElementsByTagName("img")[0];
-      if(image.src == "http://localhost:3000/Images/happy.png"){
-        image.setAttribute("src", "http://localhost:3000/Images/dead.png");
-        xhr.open("GET", `userExpress?id=robot${index+1}&expression=dead`, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({
-          value: "17"
-        }));
-      }
-      else if(image.src == "http://localhost:3000/Images/dead.png"){
-        image.setAttribute("src", "http://localhost:3000/Images/happy.png");
-        xhr.open("GET", `userExpress?id=robot${index+1}&expression=happy`, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({
-          value: "17"
-        }));
-      }
+      let newImageIndex = (parseInt(image.getAttribute("data-imageIndex")) + 1)%images.length;
+      image.setAttribute("src", `http://localhost:3000/Images/${images[newImageIndex]}.png`);
+      xhr.open("POST", `userExpress?id=robot${index+1}&expression=${images[newImageIndex]}`, true);
+      image.setAttribute("data-imageIndex", (newImageIndex));
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      // xhr.send(JSON.stringify({
+      //   value: "17"
+      // }));
+    }
 
     //   fetch("/robotJoin", {
     //     method: "POST",
@@ -71,7 +68,6 @@
       //   x.alt = "1"
       // }
       // console.log(x.alt);
-    }
   </script>  
   <link rel="stylesheet" href="styles.css">
 <head>
@@ -92,44 +88,44 @@
 		<p style="position:relative; top:0%; left:0%; margin:0;font-weight: bold;font-size:1.5vh">Dancebots:</p>
 		<div id="dancebot1" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/happy.png" onclick="togglePic(0)" alt="Default Head HERE">
+				<img src="Images/happy.png" onclick="togglePic(0)" alt="Default Head HERE" data-imageIndex=0>
       </div>
       <div class="flavorText">
         <button class="stateText">
-          1. |    SOMETEXT    |
+          1. |    MOVETEXT    |
         </button>
         <button type="button" class="power" onclick="togglePower(0)">ON</button>
       </div>
     </div>
     <div id="dancebot2" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/happy.png" onclick="togglePic(1)" alt="Default Head HERE">
+				<img src="Images/happy.png" onclick="togglePic(1)" alt="Default Head HERE" data-imageIndex=0>
       </div>
       <div class="flavorText">
         <button type="button" class="stateText">
-          2. |    SOMETEXT    |
+          2. |    MOVETEXT    |
         </button>
         <button type="button" class="power" onclick="togglePower(1)">ON</button>
       </div>
     </div>
     <div id="dancebot3" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/happy.png" onclick="togglePic(2)" alt="Default Head HERE">
+				<img src="Images/happy.png" onclick="togglePic(2)" alt="Default Head HERE" data-imageIndex=0>
       </div>
       <div class="flavorText">
         <button type="button" class="stateText">
-          3. |    SOMETEXT    |
+          3. |    MOVETEXT    |
         </button>
         <button type="button" class="power" onclick="togglePower(2)">ON</button>
       </div>
     </div>
     <div id="dancebot4" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/happy.png" onclick="togglePic(3)" alt="Default Head HERE">
+				<img src="Images/happy.png" onclick="togglePic(3)" alt="Default Head HERE" data-imageIndex=0>
       </div>
       <div class="flavorText">
         <button type="button" class="stateText">
-          4. |    SOMETEXT    |
+          4. |    MOVETEXT    |
         </button>
         <button type="button" class="power" onclick="togglePower(3)">ON</button>
       </div>

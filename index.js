@@ -105,7 +105,7 @@ app.get('/robotLeave', (req, res) => {
     console.log(output);
 });
 
-app.get('/userMove', (req, res) => {
+app.post('/userMove', (req, res) => {
     console.log("\n\nreq query: ", req.query);
     var exists = false;
     let output = getDataFromFile();
@@ -130,7 +130,7 @@ app.get('/userMove', (req, res) => {
     console.log(output);
 });
 
-app.get('/userExpress', (req, res) => {
+app.post('/userExpress', (req, res) => {
     console.log("\n\nreq query: ", req.query);
     var exists = false;
     let output = getDataFromFile();
@@ -173,3 +173,5 @@ function saveDataToFile(data) {
         if (err) throw err;
     })
 }
+
+// TODO: disable move and head when off.

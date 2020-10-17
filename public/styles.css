@@ -39,6 +39,7 @@ h1, p, button  {
     height:80%;
     display: block;
     margin: auto;
+    cursor: not-allowed;
 }
 
 .robotHead > img {
@@ -72,7 +73,11 @@ h1, p, button  {
     background-color: darkorange;
     border: 2px solid black;
     color:white;
+}
 
+.stateText{
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 #dancebot2 {
