@@ -37,14 +37,14 @@
     function togglePic(index) {
       let image = document.getElementsByClassName("robotHead")[index].getElementsByTagName("img")[0];
       if(image.src == "http://localhost:3000/Images/happy.png"){
-        image.setAttribute("src", "http://localhost:3000/Images/dead.png");
-        xhr.open("GET", `userExpress?id=robot${index+1}&expression=dead`, true);
+        image.setAttribute("src", "http://localhost:3000/Images/sad-edited.png");
+        xhr.open("GET", `userExpress?id=robot${index+1}&expression=sad`, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({
           value: "17"
         }));
       }
-      else if(image.src == "http://localhost:3000/Images/dead.png"){
+      else if(image.src == "http://localhost:3000/Images/sad-edited.png"){
         image.setAttribute("src", "http://localhost:3000/Images/happy.png");
         xhr.open("GET", `userExpress?id=robot${index+1}&expression=happy`, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
@@ -146,7 +146,7 @@
     <p style="position:relative; top:44%; left:0%; margin:0;font-weight: bold; font-size:1.5vh">Mothership:</p>
     <div id="mothership" class="dancebot">
         <div class="robotHead">
-      <img src="Images/happy.png" alt="Default Head HERE">
+      <img src="Images/mothership.png" alt="Default Head HERE">
         </div>
     </div>
 
