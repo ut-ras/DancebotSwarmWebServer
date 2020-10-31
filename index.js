@@ -12,7 +12,7 @@ var obj = `{
 }`;
 
 // Write the storage default into 'Output.txt' .
-fs.writeFile('output.json', obj, (err) => {
+fs.writeFile('public/output.json', obj, (err) => {
    // In case of a error throw err.
    if (err) throw err;
 })
@@ -162,14 +162,14 @@ app.listen(port, () => console.log(`Example app listening at http://localhost:${
 // getDataFromFile returns a JSON object from a file.
 function getDataFromFile() {
     // read the output.json file and parse the data
-    let rawdata = fs.readFileSync('output.json');
+    let rawdata = fs.readFileSync('public/output.json');
     let output = JSON.parse(rawdata);
     return output;
 }
 
 // saveDataToFile saves a JSON object to a file.
 function saveDataToFile(data) {
-    fs.writeFile('output.json', JSON.stringify(data), (err) => {
+    fs.writeFile('public/output.json', JSON.stringify(data), (err) => {
         if (err) throw err;
     })
 }

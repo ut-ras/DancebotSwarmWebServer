@@ -151,3 +151,7 @@ h1, p, button  {
     width: 40%;
     height: 49%;
 }
+
+.disabled{
+    cursor: not-allowed;
+}
