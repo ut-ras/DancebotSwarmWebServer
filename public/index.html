@@ -52,6 +52,27 @@
           value: "17"
         }));
       }
+      }
+
+      function toggleMothershipPic(index) {
+      let image = document.getElementsByClassName("robotHead")[index].getElementsByTagName("img")[0];
+      if(image.src == "http://localhost:3000/Images/mothership-happy.png"){
+        image.setAttribute("src", "http://localhost:3000/Images/mothership-sad.png");
+        xhr.open("GET", `userExpress?id=robot${index+1}&expression=sad`, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+          value: "17"
+        }));
+      }
+      else if(image.src == "http://localhost:3000/Images/mothership-sad.png"){
+        image.setAttribute("src", "http://localhost:3000/Images/mothership-happy.png");
+        xhr.open("GET", `userExpress?id=robot${index+1}&expression=happy`, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+          value: "17"
+        }));
+      }
+      }
 
     //   fetch("/robotJoin", {
     //     method: "POST",
@@ -78,7 +99,6 @@
       //   x.alt = "1"
       // }
       // console.log(x.alt);
-    }
   </script>  
   <link rel="stylesheet" href="styles.css">
 <head>
@@ -96,10 +116,11 @@
   </div>
 	<div id="container">
     <!-- Dancebots -->
-		<p style="position:relative; top:0%; left:0%; margin:0;font-weight: bold;font-size:1.5vh">Dancebots:</p>
+    <p style="position:relative; top:0%; left:0%; margin:0;font-weight: bold;font-size:1.5vh">Dancebots:</p>
+    
 		<div id="dancebot1" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/happy.png" onclick="togglePic(0)" alt="Default Head HERE">
+				<img src="Images/happy.png" onclick="togglePic(0)"  alt="Default Head HERE">
       </div>
       <div class="flavorText">
         <button class="stateText">
@@ -108,6 +129,7 @@
         <button type="button" class="power" onclick="togglePower(0)">ON</button>
       </div>
     </div>
+
     <div id="dancebot2" class="dancebot">
 			<div class="robotHead">
 				<img src="Images/happy.png" onclick="togglePic(1)" alt="Default Head HERE">
@@ -119,6 +141,7 @@
         <button type="button" class="power" onclick="togglePower(1)">ON</button>
       </div>
     </div>
+
     <div id="dancebot3" class="dancebot">
 			<div class="robotHead">
 				<img src="Images/happy.png" onclick="togglePic(2)" alt="Default Head HERE">
@@ -130,6 +153,7 @@
         <button type="button" class="power" onclick="togglePower(2)">ON</button>
       </div>
     </div>
+
     <div id="dancebot4" class="dancebot">
 			<div class="robotHead">
 				<img src="Images/happy.png" onclick="togglePic(3)" alt="Default Head HERE">
@@ -144,9 +168,9 @@
 
     <!-- Mothership -->
     <p style="position:relative; top:44%; left:0%; margin:0;font-weight: bold; font-size:1.5vh">Mothership:</p>
-    <div id="mothership" class="dancebot">
+    <div id="mothership" class="mothership">
         <div class="robotHead">
-      <img src="Images/mothership.png" alt="Default Head HERE">
+      <img src="Images/mothership-happy.png" onclick="toggleMothershipPic(4)" alt="Default Head HERE">
         </div>
     </div>
 
