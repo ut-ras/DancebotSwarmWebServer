@@ -26,7 +26,7 @@ app.get('/robotJoin', (req, res) => {
     console.log("output: ", output);
 
     var robocharge = "100%";
-    var robomove = "ankles";
+    var robomove = "stop";
     var roboecol = "blue";
     var roboexp = "happy";
     if(req.query['charge']!=null){
