@@ -8,7 +8,6 @@
     // const app = express();
     var xhr = new XMLHttpRequest();
     // $.getJSON("../output.json");
-    let images = ["happy", "dead", "full charge", "sad"];
     function togglePower(index){
       let powerButton = document.getElementsByClassName("power")[index];
       let robotHeadImage = document.getElementsByClassName("robotHead")[index].getElementsByTagName("img")[0];
@@ -28,8 +27,10 @@
         powerButton.textContent = "ON";
         robotHeadImage.classList.add("disabled");
         stateText.classList.add("disabled");
+        stateText.textContent = "| STOP |";
         robotHeadImage.setAttribute("src", "http://localhost:3000/Images/idle2.png");
         robotHeadImage.setAttribute("data-index", 0);
+        stateText.setAttribute("data-index", 0);
         xhr.open("GET", `robotLeave?id=${robotHeadImage.parentElement.parentElement.id}`, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({
@@ -38,6 +39,7 @@
       }
     }
 
+    let images = ["happy", "dead", "full charge", "sad"]
     function togglePic(index) {
       let image = document.getElementsByClassName("robotHead")[index].getElementsByTagName("img")[0];
       if(!image.classList.contains("disabled")){
@@ -53,17 +55,16 @@
       }
     }
 
-    let moves = ["|    STOP    |", "|    WALK    |", "|     HOP    |"];
-    let moves2 = ["stop","walk","hop"];
-
-    funtion toggleMove(index) {
-      let buttonQ = document.getElementByClassName("flavorText")[index].getElementsByTagName("button")[0];
-      if(!image.classList.contains("disabled")){
-        let movIndex = parseInt(buttonQ.getAttribute("data-index"));
-        movIndex = (buttonIndex+1)%moves.length;
-        buttonQ.innerHTML = moves[movIndex];
-        buttonQ.setAttribute("data-index", movIndex);
-        xhr.open("GET", `userMove?id=${buttonQ.parentElement.parentElement.id}&move=${images[imageIndex]}`, true);
+    let moves = ["STOP", "WALK", "HOP"]
+    function toggleMove(index){
+      let stateText = document.getElementsByClassName("stateText")[index];
+      let stateTextContent = stateText.textContent
+      if(!stateText.classList.contains("disabled")){
+        let moveIndex = moves.indexOf(stateTextContent.substring(2, stateTextContent.length-2)); // Strip off the | and space at beginning and end.
+        moveIndex = (moveIndex+1)%moves.length;   
+        stateText.textContent = "| " + moves[moveIndex] + " |";
+        xhr.open("GET", `userMove?id=${stateText.parentElement.parentElement.id}&move=${moves[moveIndex].toLowerCase()}`, true);
+        // Don't know why this is always necessary, but doesn't work without it.
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({
           value: "17"
@@ -100,6 +101,7 @@
             image.classList.remove("disabled");
             let stateText = dancebot.getElementsByClassName("stateText")[0];
             stateText.classList.remove("disabled");
+            stateText.textContent = "| " + data.robots[i].move.toUpperCase() + " |";
             let power = dancebot.getElementsByClassName("power")[0];
             power.textContent = "OFF";
           }
@@ -154,10 +156,8 @@
 				<img src="Images/idle2.png" onclick="togglePic(0)" data-index=0 alt="Default Head HERE" class="disabled">
       </div>
       <div class="flavorText">
-        <button type = "button" class="stateText disabled" onclick="toggleMove(0)" data-index=0>
-          |    STOP    |
-        </button>
-        <button type="button" class="power" onclick="togglePower(0)">ON</button>
+        <button class="stateText disabled" onclick="toggleMove(0)">| STOP |</button>
+        <button  class="power" onclick="togglePower(0)">ON</button>
       </div>
     </div>
 
@@ -166,10 +166,8 @@
 				<img src="Images/idle2.png" onclick="togglePic(1)" data-index=0 alt="Default Head HERE" class="disabled">
       </div>
       <div class="flavorText">
-        <button type="button" class="stateText disabled" onclick="toggleMove(0)" data-index=0>
-          |    STOP    |
-        </button>
-        <button type="button" class="power" onclick="togglePower(1)">ON</button>
+        <button  class="stateText disabled" onclick="toggleMove(1)">| STOP |</button>
+        <button  class="power" onclick="togglePower(1)">ON</button>
       </div>
     </div>
 
@@ -178,10 +176,8 @@
 				<img src="Images/idle2.png" onclick="togglePic(2)" data-index=0 alt="Default Head HERE" class="disabled">
       </div>
       <div class="flavorText">
-        <button type="button" class="stateText disabled" onclick="toggleMove(0)" data-index=0>
-          |    STOP    |
-        </button>
-        <button type="button" class="power" onclick="togglePower(2)">ON</button>
+        <button class="stateText disabled" onclick="toggleMove(2)">| STOP |</button>
+        <button  class="power" onclick="togglePower(2)">ON</button>
       </div>
     </div>
 
@@ -190,10 +186,8 @@
 				<img src="Images/idle2.png" onclick="togglePic(3)" data-index=0 alt="Default Head HERE" class="disabled">
       </div>
       <div class="flavorText">
-        <button type="button" class="stateText disabled" onclick="toggleMove(0)" data-index=0>
-          |    STOP    |
-        </button>
-        <button type="button" class="power" onclick="togglePower(3)">ON</button>
+        <button  class="stateText disabled" onclick="toggleMove(3)">| STOP |</button>
+        <button  class="power" onclick="togglePower(3)">ON</button>
       </div>
     </div>
 
