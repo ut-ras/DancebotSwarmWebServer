@@ -8,7 +8,8 @@ app.use(express.static("public"));
 var obj = `{
     "robot_type" : "dancebot",
     "num_connected" : 0,
-    "robots" : []
+    "robots" : [],
+    "offRobots" : []
 }`;
 
 // Write the storage default into 'Output.txt' .
@@ -48,9 +49,15 @@ app.get('/robotJoin', (req, res) => {
             console.log(botlist[i]);
             let robot = botlist[i];
             console.log(robot['id']);
-            if(robot['id'] === (req.query['id'])){
+            if(robot['id'] === req.query['id']){
                 console.log('successful find!');
                 exists = true;
+            }
+        }
+        for(i = 0; i < output.offRobots.length; i++){
+            if(output.offRobots[i].id == req.query["id"]){ // Remove robot from off list if it's on it.
+                output.offRobots.splice(i, 1);
+                break;
             }
         }
     }
@@ -80,7 +87,6 @@ app.get('/robotJoin', (req, res) => {
 
 app.get('/robotLeave', (req, res) => {
     console.log("\n\nreq query: ", req.query);
-    var exists = false;
     let output = getDataFromFile();
 
     console.log("output: ", output);
@@ -91,11 +97,12 @@ app.get('/robotLeave', (req, res) => {
             console.log(botlist[i]);
             let robot = botlist[i];
             console.log(robot['id']);
-            if(robot['id'] === (req.query['id'])){
+            if(robot['id'] === req.query['id']){
                 console.log('successful find!');
-                exists = true;
                 output.robots.splice(i, 1);
                 output.num_connected--;
+
+                output.offRobots.push(robot)
                 saveDataToFile(output);
             }
         }

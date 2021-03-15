@@ -7,29 +7,55 @@
     // const express = require('express');
     // const app = express();
     var xhr = new XMLHttpRequest();
-    // $.getJSON("../output.json");
+    let URL = window.location.href;
+
     function togglePower(index){
       let powerButton = document.getElementsByClassName("power")[index];
       let robotHeadImage = document.getElementsByClassName("robotHead")[index].getElementsByTagName("img")[0];
       let stateText = document.getElementsByClassName("stateText")[index];
-      if(powerButton.textContent == "ON"){ // Currently off. Turning on.
-        console.log("PRESSED");
+
+      if(powerButton.textContent == "ON"){ // Currently off. Turning on. Restore data from JSON.
         powerButton.textContent = "OFF";
         robotHeadImage.classList.remove("disabled");
         stateText.classList.remove("disabled");
-        robotHeadImage.setAttribute("src", "http://localhost:3000/Images/happy.png");
-        xhr.open("GET", `robotJoin?id=${robotHeadImage.parentElement.parentElement.id}`, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({
-          value: "17"
-        }));
+        $.ajax({
+          url: "output.json",
+          dataType: "json",
+          type: "get",
+          cache: false,
+          success: function(data){
+            console.log("PRESSED!!!");
+            let expression = "happy"
+            let movement = "stop"
+            for(let i = 0; i < data.offRobots.length; i++){
+              // NOTE: Currently only works with names matching "dancebotX". To have different names, robot in JSON will need extra index parameter to know which head (0-3) it matches with.
+              let robot = data.offRobots[i];
+              console.log("ROBOT: ", robot)
+              if(robot.id.substring(robot.id.indexOf("dancebot")+8)-1 == index){ // Found robot in offRobots list.
+                console.log("FOUND")
+                expression = robot.expression;
+                movement = robot.move;
+                break;
+              }
+            }
+            console.log(`changing robot ${index} to ${expression} and ${movement}`)
+            robotHeadImage.setAttribute("src", `${URL}Images/${expression}.png`);
+            stateText.textContent = `| ${movement} |`;
+            xhr.open("GET", `robotJoin?id=${robotHeadImage.parentElement.parentElement.id}&expression=${expression}&move=${movement}`, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+              value: "17"
+            }));
+          }
+        })
+        
+        
       }else{ // Currently on. Turning off.
         powerButton.textContent = "ON";
         robotHeadImage.classList.add("disabled");
         stateText.classList.add("disabled");
         stateText.textContent = "| STOP |";
-        robotHeadImage.setAttribute("src", "http://localhost:3000/Images/idle2.png");
-        robotHeadImage.setAttribute("data-index", 0);
+        robotHeadImage.setAttribute("src", `${URL}Images/idle2.png`);
         xhr.open("GET", `robotLeave?id=${robotHeadImage.parentElement.parentElement.id}`, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({
@@ -42,10 +68,10 @@
     function togglePic(index) {
       let image = document.getElementsByClassName("robotHead")[index].getElementsByTagName("img")[0];
       if(!image.classList.contains("disabled")){
-        let imageIndex = parseInt(image.getAttribute("data-index"));
+        let src = image.getAttribute("src");
+        let imageIndex = images.indexOf(src.substring( src.lastIndexOf("/")+1, src.lastIndexOf(".")));
         imageIndex = (imageIndex+1)%images.length;
-        image.setAttribute("src", `http://localhost:3000/Images/${images[imageIndex]}.png`);
-        image.setAttribute("data-index", imageIndex);
+        image.setAttribute("src", `${URL}Images/${images[imageIndex]}.png`);
         xhr.open("GET", `userExpress?id=${image.parentElement.parentElement.id}&expression=${images[imageIndex]}`, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({
@@ -54,7 +80,7 @@
       }
     }
 
-    let moves = ["STOP", "WALK", "HOP"]
+    let moves = ["stop", "walk", "hop"]
     function toggleMove(index){
       let stateText = document.getElementsByClassName("stateText")[index];
       let stateTextContent = stateText.textContent
@@ -62,7 +88,7 @@
         let moveIndex = moves.indexOf(stateTextContent.substring(2, stateTextContent.length-2)); // Strip off the | and space at beginning and end.
         moveIndex = (moveIndex+1)%moves.length;   
         stateText.textContent = "| " + moves[moveIndex] + " |";
-        xhr.open("GET", `userMove?id=${stateText.parentElement.parentElement.id}&move=${moves[moveIndex].toLowerCase()}`, true);
+        xhr.open("GET", `userMove?id=${stateText.parentElement.parentElement.id}&move=${moves[moveIndex]}`, true);
         // Don't know why this is always necessary, but doesn't work without it.
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({
@@ -74,33 +100,31 @@
     let mothershipImages = ["dead", "happy", "sad"]
     function toggleMothershipPic(){
       let image = document.getElementById("mothership").getElementsByTagName("img")[0];
-      let imageIndex = parseInt(image.getAttribute("data-index"));
+      let src = image.getAttribute("src");
+      let imageIndex = mothershipImages.indexOf(src.substring( src.lastIndexOf("-")+1, src.lastIndexOf(".")));
       imageIndex = (imageIndex+1)%mothershipImages.length;
-      image.setAttribute("src", `http://localhost:3000/Images/mothership-${mothershipImages[imageIndex]}.png`);
-      image.setAttribute("data-index", imageIndex);
+      image.setAttribute("src", `${URL}Images/mothership-${mothershipImages[imageIndex]}.png`);
       // xhr.open("GET", `userExpress?id=mothership&expression=${mothershipImages[imageIndex]}`, true); // Make mothership to robotJoin if we want userExpress to have any effect.
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.send(JSON.stringify({
-        value: "17"
-      }));
+      // xhr.setRequestHeader('Content-Type', 'application/json');
+      // xhr.send(JSON.stringify({
+        // value: "17"
+      // })); // Doing xhr.setRequestHeader or xhr.send without xhr.open yields "Uncaught DOMException: Failed to execute 'send' on 'XMLHttpRequest': The object's state must be OPENED."
     }
-
     window.onload = () => {
       $.ajax({
         url: "output.json",
         dataType: "json",
         type: "get",
         cache: false,
-        success: function(data){
+        success: function(data){ // Restore on bots. When power pressed, also restore that bot if off.
           for(let i = 0; i < data.num_connected; i++){
             let dancebot = document.getElementById(data.robots[i].id);
             let image = dancebot.getElementsByTagName("img")[0];
-            image.setAttribute("src", `http://localhost:3000/Images/${data.robots[i].expression}.png`);
-            image.setAttribute("data-index", images.indexOf(data.robots[i].expression));
+            image.setAttribute("src", `${URL}Images/${data.robots[i].expression}.png`);
             image.classList.remove("disabled");
             let stateText = dancebot.getElementsByClassName("stateText")[0];
             stateText.classList.remove("disabled");
-            stateText.textContent = "| " + data.robots[i].move.toUpperCase() + " |";
+            stateText.textContent = `| ${data.robots[i].move} |`;
             let power = dancebot.getElementsByClassName("power")[0];
             power.textContent = "OFF";
           }
@@ -152,65 +176,57 @@
     
 		<div id="dancebot1" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/idle2.png" onclick="togglePic(0)" data-index=0 alt="Default Head HERE" class="disabled">
+				<img src="Images/idle2.png" onclick="togglePic(0)" alt="Default Head HERE" class="disabled">
       </div>
       <div class="flavorText">
         <button class="stateText disabled" onclick="toggleMove(0)">| STOP |</button>
-        <button  class="power" onclick="togglePower(0)">ON</button>
+        <button class="power" onclick="togglePower(0)">ON</button>
       </div>
     </div>
 
     <div id="dancebot2" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/idle2.png" onclick="togglePic(1)" data-index=0 alt="Default Head HERE" class="disabled">
+				<img src="Images/idle2.png" onclick="togglePic(1)" alt="Default Head HERE" class="disabled">
       </div>
       <div class="flavorText">
-        <button  class="stateText disabled" onclick="toggleMove(1)">| STOP |</button>
-        <button  class="power" onclick="togglePower(1)">ON</button>
+        <button class="stateText disabled" onclick="toggleMove(1)">| STOP |</button>
+        <button class="power" onclick="togglePower(1)">ON</button>
       </div>
     </div>
 
     <div id="dancebot3" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/idle2.png" onclick="togglePic(2)" data-index=0 alt="Default Head HERE" class="disabled">
+				<img src="Images/idle2.png" onclick="togglePic(2)" alt="Default Head HERE" class="disabled">
       </div>
       <div class="flavorText">
         <button class="stateText disabled" onclick="toggleMove(2)">| STOP |</button>
-        <button  class="power" onclick="togglePower(2)">ON</button>
+        <button class="power" onclick="togglePower(2)">ON</button>
       </div>
     </div>
 
     <div id="dancebot4" class="dancebot">
 			<div class="robotHead">
-				<img src="Images/idle2.png" onclick="togglePic(3)" data-index=0 alt="Default Head HERE" class="disabled">
+				<img src="Images/idle2.png" onclick="togglePic(3)" alt="Default Head HERE" class="disabled">
       </div>
       <div class="flavorText">
-        <button  class="stateText disabled" onclick="toggleMove(3)">| STOP |</button>
-        <button  class="power" onclick="togglePower(3)">ON</button>
+        <button class="stateText disabled" onclick="toggleMove(3)">| STOP |</button>
+        <button class="power" onclick="togglePower(3)">ON</button>
       </div>
     </div>
 
     <!-- Mothership -->
     <p style="position:relative; top:44%; left:0%; margin:0;font-weight: bold; font-size:1.5vh">Mothership:</p>
     <div id="mothership" class="robotHead">
-      <img src="Images/mothership-happy.png" onclick="toggleMothershipPic()" data-index=0 alt="Default Head HERE">
+      <img src="Images/mothership-happy.png" onclick="toggleMothershipPic()" alt="Default Head HERE">
     </div>
 
     <!-- Swarm Commands -->
     <p style="position:relative; top:77%; left:0%; margin:0;font-weight: bold; font-size:1.5vh;">Swarm Commands:</p>
     <div class="swarmCommands">
-      <button id="stopAll">
-        Stop
-      </button>
-      <button id="resetAll">
-        Reset
-      </button>
-      <button id="walkAll">
-        Walk
-      </button>
-      <button id="hopAll">
-        Hop
-      </button>
+      <button id="stopAll">Stop</button>
+      <button id="resetAll">Reset</button>
+      <button id="walkAll">Walk</button>
+      <button id="hopAll">Hop</button>
     </div>
 	</div>
 </body>

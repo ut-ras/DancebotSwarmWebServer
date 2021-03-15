@@ -66,6 +66,7 @@ h1, p, button  {
     display: inline-block;
     transition-duration: 0.4s;
     font-weight: bold;
+    text-transform: uppercase;
 }
 
 .flavorText > button:hover {
