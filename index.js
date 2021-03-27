@@ -85,6 +85,37 @@ app.get('/robotJoin', (req, res) => {
     res.status(200).send('Number of Bots Added: ' + output.num_connected);
 });
 
+app.get("/robotUpdate", (req, res) => {
+    // Find particular robot (either on or off) if id specified. Otherwise, return entire JSON output.
+    let fileData = getDataFromFile();
+    let output = {"id": req.query["id"], charge: '100%', move: 'stop', expression: 'happy', "status": "off"}; // Default starting point for all robots.
+    if(req.query['id'] != null){
+        let exists = false;
+        for(let i = 0; i < fileData.num_connected; i++){
+            if(fileData.robots[i]['id'] === req.query['id']){
+                // Found robot and it's on.
+                output = fileData.robots[i];
+                output["status"] = "on";
+                exists = true;
+                break;
+            }
+        }
+        if(!exists){
+            // Look to see if it was turned off. Robots that were turned on then off are saved so they can pick up right where they left off. Robots that were never turned on are not since they'll start from the default.
+            for(let j = 0; j < fileData.offRobots.length; j++){
+                if(fileData.offRobots[j]['id'] === req.query['id']){
+                    // Found robot and it's off.
+                    output = fileData.offRobots[j];
+                    output["status"] = "off";
+                    break;
+                }
+            }
+        }
+    }
+    console.log("robotUpdate returning ", output);
+    res.send(output);
+})
+
 app.get('/robotLeave', (req, res) => {
     console.log("\n\nreq query: ", req.query);
     let output = getDataFromFile();
@@ -171,6 +202,7 @@ function getDataFromFile() {
     // read the output.json file and parse the data
     let rawdata = fs.readFileSync('public/output.json');
     let output = JSON.parse(rawdata);
+    console.log("Output.json has ", output);
     return output;
 }
 
